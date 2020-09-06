@@ -29,6 +29,9 @@ public class DriverFactory {
 
         if (browser.equalsIgnoreCase("chrome")) {
 	    options.addArguments("--no-sandbox");
+	    options.addArguments("--disable-extensions");
+	    options.addArguments("--headless");
+	    options.addArguments("--disable-gpu");
             return new ChromeDriver(options);
 	}
         else if (browser.equalsIgnoreCase("ie"))

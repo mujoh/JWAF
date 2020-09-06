@@ -3,6 +3,7 @@ package auto.utility;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.ie.InternetExplorerDriver;
@@ -17,14 +18,19 @@ import static org.apache.logging.log4j.LogManager.getLogger;
 public class DriverFactory {
     private static Logger logger = getLogger(DriverFactory.class.getName());
 
+    ChromeOptions options = new ChromeOptions();
+
     public WebDriver getDriver() {
+
         String browser = System.getProperty("browser");
         if (browser == null)
             browser = "chrome";
         logger.info("# WebDriver instance for browser: " + browser);
 
-        if (browser.equalsIgnoreCase("chrome"))
-            return new ChromeDriver();
+        if (browser.equalsIgnoreCase("chrome")) {
+	    options.addArguments("--no-sandbox");
+            return new ChromeDriver(options);
+	}
         else if (browser.equalsIgnoreCase("ie"))
             return new InternetExplorerDriver();
         else {
